@@ -1,16 +1,17 @@
 interface UserProps {
-  name: string;
-  age: number;
+  name?: string;
+  age?: number;
 }
 
 export class User {
   constructor(private data: UserProps) {}
 
-  get(propName: keyof UserProps): string | number {
+  get(propName: keyof UserProps): string | number | undefined {
     return this.data[propName];
   }
 
   set(update: UserProps): void {
+    this.data = { ...this.data, ...update };
     return;
   }
 
@@ -25,7 +26,7 @@ export class User {
   fetch(param: unknown): Promise<UserProps> {
     return new Promise<UserProps>((resolve, reject) => {
       try {
-        return resolve(0);
+        return resolve({} as UserProps);
       } catch (err) {
         reject(err);
       }
