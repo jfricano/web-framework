@@ -4,8 +4,12 @@
 
 import { User } from './models/User';
 
-const user = new User({ id: 1 });
-user.fetch();
+const user = new User({ name: 'new record', age: 999 });
+user.save();
+// user.fetch();
+// user.set({ name: 'joename', age: 42 });
+// user.save();
+
 // // const user = new User({ age: 41, name: 'jason' });
 
 // // setter and getter

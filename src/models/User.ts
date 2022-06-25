@@ -14,6 +14,7 @@ interface EventRegistry {
 
 export class User {
   private events: EventRegistry = {};
+  private static USER_URL = 'http://localhost:3000/users';
 
   constructor(private data: UserProps) {}
 
@@ -38,18 +39,14 @@ export class User {
 
   async fetch(): Promise<void> {
     const response = await axios.get<UserProps>(
-      `http://localhost:3000/users/${this.get('id')}`
+      `${User.USER_URL}/${this.get('id')}`
     );
     this.set(response.data);
   }
 
-  save(param: unknown): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        resolve();
-      } catch {
-        reject();
-      }
-    });
+  async save(): Promise<void> {
+    const id = this.get('id');
+    if (id) axios.put(`${User.USER_URL}/${id}`, this.data);
+    else axios.post(User.USER_URL, this.data);
   }
 }
