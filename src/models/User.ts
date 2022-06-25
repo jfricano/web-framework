@@ -1,11 +1,16 @@
+import axios from 'axios';
+
 interface UserProps {
+  id?: number;
   name?: string;
   age?: number;
 }
 
 type Callback = () => void;
 
-type EventRegistry = { [eventName: string]: Callback[] };
+interface EventRegistry {
+  [eventName: string]: Callback[];
+}
 
 export class User {
   private events: EventRegistry = {};
@@ -31,14 +36,11 @@ export class User {
     else this.events[eventName].forEach((cb) => cb());
   }
 
-  fetch(param: unknown): Promise<UserProps> {
-    return new Promise<UserProps>((resolve, reject) => {
-      try {
-        resolve({} as UserProps);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  async fetch(): Promise<void> {
+    const response = await axios.get<UserProps>(
+      `http://localhost:3000/users/${this.get('id')}`
+    );
+    this.set(response.data);
   }
 
   save(param: unknown): Promise<void> {
