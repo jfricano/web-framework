@@ -1,5 +1,8 @@
 import { Eventing } from './Eventing';
-export const USER_URL = 'http://localhost:3000/users';
+import { Sync } from './Sync';
+import { OptionalExceptFor } from '../utils/types';
+
+const rootUrl = 'http://localhost:3000/users';
 export interface UserProps {
   id?: number;
   name?: string;
@@ -8,6 +11,7 @@ export interface UserProps {
 
 export class User {
   public events: Eventing = new Eventing();
+  public sync: Sync<OptionalExceptFor<UserProps, 'id'>> = new Sync(rootUrl);
 
   constructor(private data: UserProps) {}
 
