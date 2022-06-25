@@ -1,8 +1,12 @@
-import { User, UserProps } from './User';
+// import { User, UserProps } from './User';
 import axios, { AxiosPromise } from 'axios';
 
-export class Sync<T extends UserProps> {
-  constructor(public rootUrl: string, private user: User) {}
+interface HasId {
+  id: number;
+}
+
+export class Sync<T extends HasId> {
+  constructor(public rootUrl: string) {}
 
   fetch(id: number): AxiosPromise<T> {
     return axios.get(`${this.rootUrl}/${id}`);
