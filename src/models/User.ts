@@ -25,7 +25,11 @@ export class User {
     this.events[eventName].push(callback);
   }
 
-  trigger(eventName: keyof EventRegistry): void {}
+  trigger(eventName: keyof EventRegistry): void {
+    if (!this.events[eventName])
+      throw new TypeError(`${eventName} is not a registered event`);
+    else this.events[eventName].forEach((cb) => cb());
+  }
 
   fetch(param: unknown): Promise<UserProps> {
     return new Promise<UserProps>((resolve, reject) => {
