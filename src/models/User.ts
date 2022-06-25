@@ -6,14 +6,7 @@ interface UserProps {
   age?: number;
 }
 
-type Callback = () => void;
-
-interface EventRegistry {
-  [eventName: string]: Callback[];
-}
-
 export class User {
-  private events: EventRegistry = {};
   private static USER_URL = 'http://localhost:3000/users';
 
   constructor(private data: UserProps) {}
@@ -24,17 +17,6 @@ export class User {
 
   set(update: UserProps): void {
     this.data = { ...this.data, ...update };
-  }
-
-  on(eventName: string, callback: Callback): void {
-    if (!this.events[eventName]) this.events[eventName] = [];
-    this.events[eventName].push(callback);
-  }
-
-  trigger(eventName: keyof EventRegistry): void {
-    if (!this.events[eventName])
-      throw new TypeError(`${eventName} is not a registered event`);
-    else this.events[eventName].forEach((cb) => cb());
   }
 
   async fetch(): Promise<void> {
