@@ -3,7 +3,13 @@ interface UserProps {
   age?: number;
 }
 
+type Callback = () => void;
+
+type EventRegistry = { [eventName: string]: Callback[] };
+
 export class User {
+  private events: EventRegistry;
+
   constructor(private data: UserProps) {}
 
   get(propName: keyof UserProps): string | number | undefined {
@@ -15,11 +21,11 @@ export class User {
     return;
   }
 
-  on(eventName: string, callback: () => {}): void {
+  on(eventName: string, callback: Callback): void {
     return;
   }
 
-  trigger(eventName: string): void {
+  trigger(eventName: keyof EventRegistry): void {
     return;
   }
 
