@@ -1,4 +1,3 @@
-// import { User, UserProps } from './User';
 import axios, { AxiosPromise } from 'axios';
 
 export interface HasId {
@@ -10,7 +9,6 @@ export class Sync<T extends HasId> {
 
   fetch(id: number): AxiosPromise<T> {
     return axios.get(`${this.rootUrl}/${id}`);
-    // this.user.set(response.data);
   }
 
   save(data: T): AxiosPromise<T> {

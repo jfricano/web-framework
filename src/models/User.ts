@@ -15,12 +15,4 @@ export class User {
   public sync: Sync<UserProps> = new Sync(rootUrl);
 
   constructor(private data: UserProps) {}
-
-  get(propName: keyof UserProps): string | number | undefined {
-    return this.data[propName];
-  }
-
-  set(update: UserProps): void {
-    this.data = { ...this.data, ...update };
-  }
 }
