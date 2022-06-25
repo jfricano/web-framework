@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Eventing } from './Eventing';
 
 interface UserProps {
   id?: number;
@@ -8,6 +9,7 @@ interface UserProps {
 
 export class User {
   private static USER_URL = 'http://localhost:3000/users';
+  public events: Eventing = new Eventing();
 
   constructor(private data: UserProps) {}
 
