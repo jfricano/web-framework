@@ -8,7 +8,7 @@ type Callback = () => void;
 type EventRegistry = { [eventName: string]: Callback[] };
 
 export class User {
-  private events: EventRegistry;
+  private events: EventRegistry = {};
 
   constructor(private data: UserProps) {}
 
@@ -18,21 +18,19 @@ export class User {
 
   set(update: UserProps): void {
     this.data = { ...this.data, ...update };
-    return;
   }
 
   on(eventName: string, callback: Callback): void {
-    return;
+    if (!this.events[eventName]) this.events[eventName] = [];
+    this.events[eventName].push(callback);
   }
 
-  trigger(eventName: keyof EventRegistry): void {
-    return;
-  }
+  trigger(eventName: keyof EventRegistry): void {}
 
   fetch(param: unknown): Promise<UserProps> {
     return new Promise<UserProps>((resolve, reject) => {
       try {
-        return resolve({} as UserProps);
+        resolve({} as UserProps);
       } catch (err) {
         reject(err);
       }

@@ -11,3 +11,8 @@ user.set({ name: 'jasonjpf' });
 
 console.log(user.get('age'));
 console.log(user.get('name'));
+
+user.on('change', () => {});
+user.on('change', () => {});
+user.on('asdf', () => {});
+console.log(user);
