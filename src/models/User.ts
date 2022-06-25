@@ -1,14 +1,12 @@
-import axios from 'axios';
 import { Eventing } from './Eventing';
-
-interface UserProps {
+export const USER_URL = 'http://localhost:3000/users';
+export interface UserProps {
   id?: number;
   name?: string;
   age?: number;
 }
 
 export class User {
-  private static USER_URL = 'http://localhost:3000/users';
   public events: Eventing = new Eventing();
 
   constructor(private data: UserProps) {}
@@ -19,18 +17,5 @@ export class User {
 
   set(update: UserProps): void {
     this.data = { ...this.data, ...update };
-  }
-
-  async fetch(): Promise<void> {
-    const response = await axios.get<UserProps>(
-      `${User.USER_URL}/${this.get('id')}`
-    );
-    this.set(response.data);
-  }
-
-  async save(): Promise<void> {
-    const id = this.get('id');
-    if (id) axios.put(`${User.USER_URL}/${id}`, this.data);
-    else axios.post(User.USER_URL, this.data);
   }
 }
