@@ -1,8 +1,11 @@
-export type AttrGetter<T> = <K extends keyof T>(key: K) => T[K];
-export type AttrSetter<T> = (update: T) => void;
-export type AllAttrGetter<T> = () => T;
+import {
+  ModelAttributes,
+  AttrGetter,
+  AttrSetter,
+  AllAttrGetter,
+} from './Model';
 
-export class Attributes<T> {
+export class Attributes<T> implements ModelAttributes<T> {
   constructor(private data: T) {}
 
   get: AttrGetter<T> = <K extends keyof T>(key: K) => this.data[key];

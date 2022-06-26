@@ -1,17 +1,6 @@
-import { Events } from '../types';
+import { Events, EventRegistry, ListenerFunc, TriggerFunc } from './Model';
 
-interface EventRegistry {
-  [eventName: string]: Callback[];
-}
-
-export type Callback = (error?: Error) => void;
-export type ListenerFunc = (eventName: string, callback: Callback) => void;
-export type TriggerFunc = (
-  eventName: keyof EventRegistry,
-  error?: Error
-) => void;
-
-export class Eventing {
+export class Eventing implements Events {
   private events: EventRegistry = {};
 
   on: ListenerFunc = (eventName, callback) => {

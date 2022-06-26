@@ -1,19 +1,12 @@
-import axios, { AxiosPromise } from 'axios';
+import axios from 'axios';
+import { HasId, FetchFunc, SaveFunc, Sync } from './Model';
 
-export interface HasId {
-  id?: number;
-}
-
-type FetchFunc<T> = (id: number) => AxiosPromise<T | void>;
-type SaveFunc<T> = (data: T) => AxiosPromise<T>;
-
-export class ApiSync<T extends HasId> {
+export class ApiSync<T extends HasId> implements Sync<T> {
   constructor(public rootUrl: string) {}
 
-  fetch: FetchFunc<T> = (id: number): AxiosPromise =>
-    axios.get(`${this.rootUrl}/${id}`);
+  fetch: FetchFunc = (id: number) => axios.get(`${this.rootUrl}/${id}`);
 
-  save: SaveFunc<T> = (data: T): AxiosPromise => {
+  save: SaveFunc<T> = (data) => {
     const { id } = data;
 
     if (id) return axios.put(`${this.rootUrl}/${id}`, data);
