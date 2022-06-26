@@ -1,13 +1,13 @@
-import { UserProps } from './User';
+export type AttrGetter<T> = <K extends keyof T>(key: K) => T[K];
+export type AttrSetter<T> = (update: T) => void;
+export type AllAttrGetter<T> = () => T;
 
 export class Attributes<T> {
   constructor(private data: T) {}
 
-  get = <K extends keyof T>(key: K): T[K] => {
-    return this.data[key];
-  };
+  get: AttrGetter<T> = (key) => this.data[key];
 
-  set = (update: T): void => {
-    this.data = { ...this.data, ...update };
-  };
+  getAll: AllAttrGetter<T> = () => this.data;
+
+  set: AttrSetter<T> = (update) => (this.data = { ...this.data, ...update });
 }

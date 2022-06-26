@@ -1,6 +1,6 @@
-import { Eventing, Callback } from './Eventing';
+import { Eventing, ListenerFunc, TriggerFunc } from './Eventing';
 import { Sync } from './Sync';
-import { Attributes } from './Attributes';
+import { Attributes, AttrGetter, AttrSetter } from './Attributes';
 
 const rootUrl = 'http://localhost:3000/users';
 
@@ -9,6 +9,8 @@ export interface UserProps {
   name?: string;
   age?: number;
 }
+
+type UserGetter = AttrGetter<UserProps>;
 
 export class User {
   public events: Eventing = new Eventing();
@@ -19,7 +21,7 @@ export class User {
     this.attributes = new Attributes(attrs);
   }
 
-  get get() {
+  get get(): UserGetter {
     return this.attributes.get;
   }
 
@@ -28,15 +30,22 @@ export class User {
     this.events.trigger('change');
   }
 
-  get on() {
+  get on(): ListenerFunc {
     return this.events.on;
   }
 
-  get trigger() {
+  get trigger(): TriggerFunc {
     return this.events.trigger;
   }
 
-  // fetch() {}
+  fetch(): void {
+    const id = this.attributes.get('id');
 
-  // save() {}
+    if (typeof id !== 'number') throw new Error('cannot fetch without an id');
+    this.sync.fetch(id).then((response) => this.set(response.data));
+  }
+
+  save(): void {
+    this.sync.save(this.attributes.getAll());
+  }
 }

@@ -2,8 +2,7 @@
   "users": [
     {
       "id": 1,
-      "name": "joename",
-      "age": 42
+      "name": "updated NAME"
     },
     {
       "name": "new record",
