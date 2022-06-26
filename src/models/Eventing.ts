@@ -1,3 +1,5 @@
+import { Events } from '../types';
+
 interface EventRegistry {
   [eventName: string]: Callback[];
 }
@@ -18,11 +20,12 @@ export class Eventing {
   };
 
   trigger: TriggerFunc = (eventName, error) => {
-    if (!this.events[eventName])
+    if (!this.events[eventName]) {
       console.warn(`${eventName} is not a registered event`);
-    else
+    } else {
       this.events[eventName].forEach((cb) =>
         cb(eventName === 'error' ? error : undefined)
       );
+    }
   };
 }
