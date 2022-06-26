@@ -8,6 +8,6 @@ const user = new User({ id: 1 });
 // console.log(user.get('age'));
 
 user.on('change', () => console.log('change!', user));
-user.set({ name: 'updated NAME' });
+user.set({ name: 'opdated NAME' });
 user.save();
 // user.fetch();
