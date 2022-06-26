@@ -1,8 +1,9 @@
-import { Eventing, ListenerFunc, TriggerFunc } from './Eventing';
-import { Sync } from './Sync';
-import { Attributes, AttrGetter } from './Attributes';
+import { Model } from './Model';
+import { Eventing } from './Eventing';
+import { ApiSync } from './ApiSync';
+import { Attributes } from './Attributes';
 
-const rootUrl = 'http://localhost:3000/users';
+const ROOT_URL = 'http://localhost:3000/users';
 
 export interface UserProps {
   id?: number;
@@ -10,46 +11,12 @@ export interface UserProps {
   age?: number;
 }
 
-export class User {
-  private events: Eventing = new Eventing();
-  private sync: Sync<UserProps> = new Sync(rootUrl);
-  private attributes: Attributes<UserProps>;
-
-  constructor(attrs: UserProps) {
-    this.attributes = new Attributes(attrs);
-  }
-
-  get get(): AttrGetter<UserProps> {
-    return this.attributes.get;
-  }
-
-  set(update: UserProps): void {
-    this.attributes.set(update);
-    this.events.trigger('change');
-  }
-
-  get on(): ListenerFunc {
-    return this.events.on;
-  }
-
-  get trigger(): TriggerFunc {
-    return this.events.trigger;
-  }
-
-  fetch(): void {
-    const id = this.attributes.get('id');
-
-    if (typeof id !== 'number') throw new Error('cannot fetch without an id');
-    this.sync
-      .fetch(id)
-      .then((response) => this.set(response.data))
-      .catch((err) => this.trigger('error', err));
-  }
-
-  save(): void {
-    this.sync
-      .save(this.attributes.getAll())
-      .then(() => this.trigger('save'))
-      .catch((err) => this.trigger('error', err));
-  }
+export class User extends Model<UserProps> {
+  static buildUser = (attributes: UserProps) => {
+    return new User(
+      new Attributes(attributes),
+      new Eventing(),
+      new ApiSync(ROOT_URL)
+    );
+  };
 }
