@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Eventing } from './Eventing';
+import { Eventing } from "./Eventing";
+import axios from "axios";
 
 export class Collection<TModel, TData> {
   models: TModel[] = [];
@@ -13,13 +13,14 @@ export class Collection<TModel, TData> {
   on = this.events.on;
   trigger = this.events.trigger;
 
+  // test
   fetch(): void {
     axios.get(this.rootUrl).then((response) => {
       response.data.forEach((value: TData) => {
         this.models.push(this.deserialize(value));
       });
 
-      this.trigger('change');
+      this.trigger("change");
     });
   }
 }
