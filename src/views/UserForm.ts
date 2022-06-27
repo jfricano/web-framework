@@ -1,24 +1,26 @@
 import { User } from '../models';
 
+type EventCallback = () => void;
 interface EventsMap {
-  [eventType: string]: () => void;
+  [eventType: string]: EventCallback;
 }
 
 export class UserForm {
-  constructor(public parent: Element, public model: User) {}
-
-  onButtonClick(): void {
-    console.log('hi there');
+  constructor(public parent: Element, public model: User) {
+    this.bindModel();
   }
 
-  onHeaderHover(): void {
-    console.log('hover hover');
+  private bindModel(): void {
+    this.model.on('change', () => this.render());
   }
+
+  onSetAgeClick: EventCallback = () => {
+    this.model.setRandomAge();
+  };
 
   eventsMap(): EventsMap {
     return {
-      'click:button': this.onButtonClick,
-      'mouseover:h1': this.onHeaderHover,
+      'click:.set-age': this.onSetAgeClick,
     };
   }
 
@@ -30,11 +32,13 @@ export class UserForm {
         <div>User age: ${this.model.get('age')}</div>
         <input />
         <button>Click Me</button>
+        <button class="set-age">Set Random Age</button>
       </div>
     `;
   }
 
   render(): void {
+    this.parent.innerHTML = '';
     const templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
 
