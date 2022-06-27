@@ -1,5 +1,5 @@
-import { Eventing } from "./Eventing";
-import axios from "axios";
+import { Eventing } from './Eventing';
+import axios from 'axios';
 
 export class Collection<TModel, TData> {
   models: TModel[] = [];
@@ -19,7 +19,7 @@ export class Collection<TModel, TData> {
         this.models.push(this.deserialize(value));
       });
 
-      this.trigger("change");
+      this.trigger('change');
     });
   }
 }

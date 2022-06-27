@@ -1,4 +1,4 @@
-import { Events, EventRegistry, ListenerFunc, TriggerFunc } from './Model';
+import { EventRegistry, Events, ListenerFunc, TriggerFunc } from './Model';
 
 export class Eventing implements Events {
   private events: EventRegistry = {};

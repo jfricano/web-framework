@@ -1,8 +1,8 @@
 import {
-  ModelAttributes,
+  AllAttrGetter,
   AttrGetter,
   AttrSetter,
-  AllAttrGetter,
+  ModelAttributes,
 } from './Model';
 
 export class Attributes<T> implements ModelAttributes<T> {
