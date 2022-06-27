@@ -10,8 +10,11 @@ export abstract class View<TModel extends Model<TData>, TData> {
     this.bindModel();
   }
 
-  abstract eventsMap(): EventsMap;
   abstract template(): string;
+
+  eventsMap(): EventsMap {
+    return {};
+  }
 
   private bindModel(): void {
     this.model.on('change', () => this.render());
