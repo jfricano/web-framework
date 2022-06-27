@@ -2,6 +2,7 @@ import { Model } from './Model';
 import { Eventing } from './Eventing';
 import { ApiSync } from './ApiSync';
 import { Attributes } from './Attributes';
+import { Collection } from './Collection';
 
 const ROOT_URL = 'http://localhost:3000/users';
 
@@ -17,6 +18,12 @@ export class User extends Model<UserProps> {
       new Attributes(attrs),
       new Eventing(),
       new ApiSync(ROOT_URL)
+    );
+  }
+
+  static buildUserCollection(): Collection<User, UserProps> {
+    return new Collection<User, UserProps>(ROOT_URL, (json: UserProps) =>
+      User.buildUser(json)
     );
   }
 }
