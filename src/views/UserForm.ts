@@ -1,59 +1,39 @@
-import { User } from '../models';
+import { EventCallback, EventsMap, View } from './View';
+import { User, UserProps } from '../models';
 
-type EventCallback = () => void;
-interface EventsMap {
-  [eventType: string]: EventCallback;
-}
-
-export class UserForm {
-  constructor(public parent: Element, public model: User) {
-    this.bindModel();
-  }
-
-  private bindModel(): void {
-    this.model.on('change', () => this.render());
-  }
-
+export class UserForm extends View<User, UserProps> {
   onSetAgeClick: EventCallback = () => {
     this.model.setRandomAge();
+  };
+
+  onSetNameClick: EventCallback = () => {
+    const input = this.parent.querySelector('input');
+    if (input) {
+      const name = input.value;
+      this.model.set({ name });
+    }
+  };
+
+  onSaveClick: EventCallback = () => {
+    this.model.save();
   };
 
   eventsMap(): EventsMap {
     return {
       'click:.set-age': this.onSetAgeClick,
+      'click:.set-name': this.onSetNameClick,
+      'click:.save-model': this.onSaveClick,
     };
   }
 
   template(): string {
     return `
       <div>
-        <h1>User Form</h1>
-        <div>User name: ${this.model.get('name')}</div>
-        <div>User age: ${this.model.get('age')}</div>
-        <input />
-        <button>Click Me</button>
+        <input placeholder="${this.model.get('name')}" />
+        <button class="set-name">Change Name</button>
         <button class="set-age">Set Random Age</button>
+        <button class="save-model">Save User</button>
       </div>
     `;
-  }
-
-  render(): void {
-    this.parent.innerHTML = '';
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-
-    this.bindEvents(templateElement.content);
-    this.parent.append(templateElement.content);
-  }
-
-  private bindEvents(fragment: DocumentFragment): void {
-    const eventsMap = this.eventsMap();
-
-    for (const eventKey in eventsMap) {
-      const [eventName, selector] = eventKey.split(':');
-      fragment.querySelectorAll(selector).forEach((el) => {
-        el.addEventListener(eventName, eventsMap[eventKey]);
-      });
-    }
   }
 }
