@@ -13,7 +13,6 @@ export class Collection<TModel, TData> {
   on = this.events.on;
   trigger = this.events.trigger;
 
-  // test
   fetch(): void {
     axios.get(this.rootUrl).then((response) => {
       response.data.forEach((value: TData) => {
