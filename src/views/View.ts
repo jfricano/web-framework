@@ -15,9 +15,9 @@ export interface RegionsMap {
 }
 
 export abstract class View<TModel extends Model<TData>, TData> {
-  regions: Regions = {};
+  protected regions: Regions = {};
 
-  constructor(public parent: Element, public model: TModel) {
+  constructor(protected parent: Element, protected model: TModel) {
     this.bindModel();
   }
 
@@ -58,7 +58,7 @@ export abstract class View<TModel extends Model<TData>, TData> {
     }
   }
 
-  onRender(): void {}
+  protected onRender(): void {}
 
   render(): void {
     const templateElement = document.createElement('template');
@@ -67,6 +67,7 @@ export abstract class View<TModel extends Model<TData>, TData> {
 
     this.bindEvents(templateElement.content);
     this.mapRegions(templateElement.content);
+    this.onRender();
 
     this.parent.append(templateElement.content);
   }

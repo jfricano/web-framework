@@ -2,11 +2,11 @@ import { EventCallback, EventsMap, View } from './View';
 import { User, UserProps } from '../models';
 
 export class UserForm extends View<User, UserProps> {
-  onSetAgeClick: EventCallback = () => {
+  private onSetAgeClick: EventCallback = () => {
     this.model.setRandomAge();
   };
 
-  onSetNameClick: EventCallback = () => {
+  private onSetNameClick: EventCallback = () => {
     const input = this.parent.querySelector('input');
     if (input) {
       const name = input.value;
@@ -14,11 +14,11 @@ export class UserForm extends View<User, UserProps> {
     }
   };
 
-  onSaveClick: EventCallback = () => {
+  private onSaveClick: EventCallback = () => {
     this.model.save();
   };
 
-  eventsMap(): EventsMap {
+  protected eventsMap(): EventsMap {
     return {
       'click:.set-age': this.onSetAgeClick,
       'click:.set-name': this.onSetNameClick,
@@ -26,7 +26,7 @@ export class UserForm extends View<User, UserProps> {
     };
   }
 
-  template(): string {
+  protected template(): string {
     return `
       <div>
         <input placeholder="${this.model.get('name')}" />

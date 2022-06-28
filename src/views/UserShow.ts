@@ -3,7 +3,7 @@ import { User, UserProps } from '../models';
 import { View } from './View';
 
 export class UserShow extends View<User, UserProps> {
-  template() {
+  protected template(): string {
     return `
       <div>
         <h1>User Detail</h1>
