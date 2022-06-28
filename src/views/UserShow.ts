@@ -1,4 +1,4 @@
-import { EventCallback, User, UserProps } from '../models';
+import { User, UserProps } from '../models';
 
 import { View } from './View';
 

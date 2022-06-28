@@ -5,14 +5,29 @@ export interface EventsMap {
   [eventType: string]: EventCallback;
 }
 
+interface Regions {
+  [key: string]: Element;
+}
+
+type HtmlSelector = string;
+export interface RegionsMap {
+  [key: string]: HtmlSelector;
+}
+
 export abstract class View<TModel extends Model<TData>, TData> {
+  regions: Regions = {};
+
   constructor(public parent: Element, public model: TModel) {
     this.bindModel();
   }
 
-  abstract template(): string;
+  protected abstract template(): string;
 
-  eventsMap(): EventsMap {
+  protected regionsMap(): RegionsMap {
+    return {};
+  }
+
+  protected eventsMap(): EventsMap {
     return {};
   }
 
@@ -31,12 +46,25 @@ export abstract class View<TModel extends Model<TData>, TData> {
     }
   }
 
+  private mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+
+    for (const regionsKey in regionsMap) {
+      const selector = regionsMap[regionsKey];
+      const element = fragment.querySelector(selector);
+      if (element) {
+        this.regions[regionsKey] = element;
+      }
+    }
+  }
+
   render(): void {
-    this.parent.innerHTML = '';
     const templateElement = document.createElement('template');
+    this.parent.innerHTML = '';
     templateElement.innerHTML = this.template();
 
     this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
     this.parent.append(templateElement.content);
   }
 }
