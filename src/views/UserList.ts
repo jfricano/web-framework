@@ -3,27 +3,24 @@ import { User, UserProps } from '../models';
 import { CollectionView } from './CollectionView';
 import { UserEdit } from './UserEdit';
 
+export interface UserViewProps {
+  displayHeader: boolean;
+}
+
 export class UserList extends CollectionView<User, UserProps> {
-  static async buildUserList(root: Element): Promise<UserList> {
+  static async buildUserList(root: HTMLElement): Promise<UserList> {
     const allUsers = User.buildUserCollection();
     await allUsers.fetch();
 
     return new UserList(allUsers, root);
   }
 
-  protected renderItem(user: User, itemParent: Element) {
+  protected renderItem(user: User, itemParent: HTMLElement) {
     const display = new UserEdit(itemParent, user, {
       displayHeader: user.get('id') === 1,
     });
     display.render();
-  }
 
-  render(): void {
-    this.collection.models.forEach((model) => {
-      const parent = document.createElement('div');
-      parent.style.marginBottom = '20px';
-      this.root.appendChild(parent);
-      this.renderItem(model, parent);
-    });
+    itemParent.style.marginBottom = '20px';
   }
 }

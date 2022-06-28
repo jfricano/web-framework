@@ -3,12 +3,9 @@ import { User, UserProps } from '../models';
 
 import { UserForm } from './UserForm';
 import { UserShow } from './UserShow';
+import { UserViewProps } from './UserList';
 
-export class UserEdit extends View<
-  User,
-  UserProps,
-  { displayHeader: boolean }
-> {
+export class UserEdit extends View<User, UserProps, UserViewProps> {
   protected regionsMap(): RegionsMap {
     return {
       userShow: '.user-show',

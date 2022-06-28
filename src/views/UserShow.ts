@@ -1,12 +1,9 @@
 import { User, UserProps } from '../models';
 
+import { UserViewProps } from './UserList';
 import { View } from './View';
 
-export class UserShow extends View<
-  User,
-  UserProps,
-  { displayHeader: boolean }
-> {
+export class UserShow extends View<User, UserProps, UserViewProps> {
   // displayHeader: boolean = true;
 
   protected template(): string {
