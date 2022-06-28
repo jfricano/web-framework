@@ -58,6 +58,8 @@ export abstract class View<TModel extends Model<TData>, TData> {
     }
   }
 
+  onRender(): void {}
+
   render(): void {
     const templateElement = document.createElement('template');
     this.parent.innerHTML = '';
@@ -65,6 +67,7 @@ export abstract class View<TModel extends Model<TData>, TData> {
 
     this.bindEvents(templateElement.content);
     this.mapRegions(templateElement.content);
+
     this.parent.append(templateElement.content);
   }
 }

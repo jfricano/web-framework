@@ -1,6 +1,8 @@
 import { User, UserProps } from '../models';
 
 import { RegionsMap, View } from './View';
+import { UserForm } from './UserForm';
+import { UserShow } from './UserShow';
 
 export class UserEdit extends View<User, UserProps> {
   regionsMap(): RegionsMap {
@@ -10,7 +12,12 @@ export class UserEdit extends View<User, UserProps> {
     };
   }
 
-  template() {
+  onRender(): void {
+    new UserShow(this.regions.userShow, this.model).render();
+    new UserForm(this.regions.userForm, this.model).render();
+  }
+
+  template(): string {
     return `
       <div>
         <div class="user-show"></div>
