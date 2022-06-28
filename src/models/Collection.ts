@@ -1,13 +1,13 @@
 import { Events, Sync } from './Model';
 
-export class Collection<TModel, TData> {
-  models: TModel[] = [];
+export class Collection<T, K> {
+  collectibles: T[] = [];
   // events: Eventing = new Eventing();
 
   constructor(
-    private sync: Sync<TData>,
+    private sync: Sync<K>,
     private events: Events,
-    private deserialize: (json: TData) => TModel
+    private deserialize: (json: K) => T
   ) {}
 
   on = this.events.on;
@@ -16,7 +16,7 @@ export class Collection<TModel, TData> {
   async fetch(): Promise<void> {
     const data = await this.sync.fetchAll();
     data.forEach((el) => {
-      this.models.push(this.deserialize(el));
+      this.collectibles.push(this.deserialize(el));
     });
   }
 }

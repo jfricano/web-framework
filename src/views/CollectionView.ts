@@ -1,9 +1,15 @@
-import { Collection } from '../models';
+import { Collection, Model } from '../models';
 
-export abstract class Collectionview<TModel, TData> {
-  collection: Collection<TModel, TData> = new Collection();
+import { View } from './View';
 
-  abstract renderItem(model, itemParent);
+export abstract class CollectionView<TModel extends Model<TData>, TData> {
+  constructor(public collection: Collection<View<TModel, TData>, TData>) {}
 
-  render(): void {}
+  protected abstract renderItem(model: Model<TData>, itemParent: Element): void;
+
+  render(): void {
+    this.collection.collectibles.forEach((view) => {
+      this.renderItem(view.model, view.parent);
+    });
+  }
 }
