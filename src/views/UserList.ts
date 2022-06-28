@@ -1,4 +1,4 @@
-import { Collection, User, UserProps } from '../models';
+import { User, UserProps } from '../models';
 
 import { CollectionView } from './CollectionView';
 import { UserEdit } from './UserEdit';
@@ -12,11 +12,18 @@ export class UserList extends CollectionView<User, UserProps> {
   }
 
   protected renderItem(user: User, itemParent: Element) {
-    const display = new UserEdit(itemParent, user);
+    const display = new UserEdit(itemParent, user, {
+      displayHeader: user.get('id') === 1,
+    });
     display.render();
-    if (user.get('id') !== 1) {
-      const header = itemParent.querySelector('h1');
-      if (header) header.style.display = 'none';
-    }
+  }
+
+  render(): void {
+    this.collection.models.forEach((model) => {
+      const parent = document.createElement('div');
+      parent.style.marginBottom = '20px';
+      this.root.appendChild(parent);
+      this.renderItem(model, parent);
+    });
   }
 }

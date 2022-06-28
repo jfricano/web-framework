@@ -14,10 +14,18 @@ export interface RegionsMap {
   [key: string]: HtmlSelector;
 }
 
-export abstract class View<TModel extends Model<TData>, TData> {
+export abstract class View<
+  TModel extends Model<TData>,
+  TData,
+  ViewProps extends object = never
+> {
   protected regions: Regions = {};
 
-  constructor(public parent: Element, public model: TModel) {
+  constructor(
+    public parent: Element,
+    public model: TModel,
+    public props?: ViewProps
+  ) {
     this.bindModel();
   }
 

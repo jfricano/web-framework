@@ -1,10 +1,14 @@
+import { RegionsMap, View } from './View';
 import { User, UserProps } from '../models';
 
 import { UserForm } from './UserForm';
 import { UserShow } from './UserShow';
-import { RegionsMap, View } from './View';
 
-export class UserEdit extends View<User, UserProps> {
+export class UserEdit extends View<
+  User,
+  UserProps,
+  { displayHeader: boolean }
+> {
   protected regionsMap(): RegionsMap {
     return {
       userShow: '.user-show',
@@ -13,7 +17,7 @@ export class UserEdit extends View<User, UserProps> {
   }
 
   protected onRender(): void {
-    new UserShow(this.regions.userShow, this.model).render();
+    new UserShow(this.regions.userShow, this.model, this.props).render();
     new UserForm(this.regions.userForm, this.model).render();
   }
 
