@@ -9,10 +9,13 @@ export abstract class CollectionView<TModel extends Model<TData>, TData> {
   protected abstract renderItem(model: TModel, itemParent: HTMLElement): void;
 
   render(): void {
+    this.root.innerHTML = '';
+
+    // FIXME FIRST APPEND TO A TEMPLATE ELEMENT HERE??
     this.collection.models.forEach((model) => {
-      const parent = document.createElement('div');
-      this.root.appendChild(parent);
-      this.renderItem(model, parent);
+      const itemParent = document.createElement('div');
+      this.root.appendChild(itemParent);
+      this.renderItem(model, itemParent);
     });
   }
 }

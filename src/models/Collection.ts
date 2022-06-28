@@ -1,12 +1,12 @@
-import { Events, Sync } from './Model';
+import { Events, Model, Sync } from './Model';
 
-export class Collection<T, K> {
-  models: T[] = [];
+export class Collection<TModel extends Model<TData>, TData> {
+  models: TModel[] = [];
 
   constructor(
-    private sync: Sync<K>,
+    private sync: Sync<TData>,
     private events: Events,
-    private deserialize: (json: K) => T
+    private deserialize: (json: TData) => TModel
   ) {}
 
   on = this.events.on;

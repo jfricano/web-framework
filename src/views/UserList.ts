@@ -16,10 +16,9 @@ export class UserList extends CollectionView<User, UserProps> {
   }
 
   protected renderItem(user: User, itemParent: HTMLElement) {
-    const display = new UserEdit(itemParent, user, {
+    new UserEdit(itemParent, user, {
       displayHeader: user.get('id') === 1,
-    });
-    display.render();
+    }).render();
 
     itemParent.style.marginBottom = '20px';
   }
