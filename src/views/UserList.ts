@@ -4,12 +4,12 @@ import { CollectionView } from './CollectionView';
 import { UserEdit } from './UserEdit';
 
 export class UserList extends CollectionView<User, UserProps> {
-  // static buildUserList(parent: Element): UserList {
-  //   const allUsers = User.buildUserCollection();
-  //   void allUsers.fetch();
+  static async buildUserList(root: Element): Promise<UserList> {
+    const allUsers = User.buildUserCollection();
+    await allUsers.fetch();
 
-  //   return new UserList(allUsers, parent);
-  // }
+    return new UserList(allUsers, root);
+  }
 
   protected renderItem(user: User, itemParent: Element) {
     const display = new UserEdit(itemParent, user);
