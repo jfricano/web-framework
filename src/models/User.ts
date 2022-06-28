@@ -22,8 +22,10 @@ export class User extends Model<UserProps> {
   }
 
   static buildUserCollection(): Collection<User, UserProps> {
-    return new Collection<User, UserProps>(ROOT_URL, (json: UserProps) =>
-      User.buildUser(json)
+    return new Collection<User, UserProps>(
+      new ApiSync(ROOT_URL),
+      new Eventing(),
+      (json: UserProps) => User.buildUser(json)
     );
   }
 

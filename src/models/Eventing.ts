@@ -1,14 +1,14 @@
-import { EventRegistry, Events, ListenerFunc, TriggerFunc } from './Model';
+import { EventCallback, EventRegistry, Events } from './Model';
 
 export class Eventing implements Events {
   private events: EventRegistry = {};
 
-  on: ListenerFunc = (eventName, callback) => {
+  on = (eventName: string, callback: EventCallback) => {
     if (!this.events[eventName]) this.events[eventName] = [];
     this.events[eventName].push(callback);
   };
 
-  trigger: TriggerFunc = (eventName, error) => {
+  trigger = (eventName: string, error?: Error) => {
     if (!this.events[eventName]) {
       console.warn(`${eventName} is not a registered event`);
     } else {

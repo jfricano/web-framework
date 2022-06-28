@@ -1,25 +1,22 @@
-import { Eventing } from './Eventing';
-import axios from 'axios';
+import { Events, Sync } from './Model';
 
 export class Collection<TModel, TData> {
   models: TModel[] = [];
-  events: Eventing = new Eventing();
+  // events: Eventing = new Eventing();
 
   constructor(
-    public rootUrl: string,
-    public deserialize: (json: TData) => TModel
+    private sync: Sync<TData>,
+    private events: Events,
+    private deserialize: (json: TData) => TModel
   ) {}
 
   on = this.events.on;
   trigger = this.events.trigger;
 
-  fetch(): void {
-    axios.get(this.rootUrl).then((response) => {
-      response.data.forEach((value: TData) => {
-        this.models.push(this.deserialize(value));
-      });
-
-      this.trigger('change');
+  async fetch(): Promise<void> {
+    const data = await this.sync.fetchAll();
+    data.forEach((el) => {
+      this.models.push(this.deserialize(el));
     });
   }
 }
