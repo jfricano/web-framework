@@ -17,7 +17,7 @@ export interface RegionsMap {
 export abstract class View<TModel extends Model<TData>, TData> {
   protected regions: Regions = {};
 
-  protected constructor(public parent: Element, public model: TModel) {
+  constructor(public parent: Element, public model: TModel) {
     this.bindModel();
   }
 

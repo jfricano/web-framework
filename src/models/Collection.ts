@@ -1,8 +1,7 @@
 import { Events, Sync } from './Model';
 
 export class Collection<T, K> {
-  collectibles: T[] = [];
-  // events: Eventing = new Eventing();
+  models: T[] = [];
 
   constructor(
     private sync: Sync<K>,
@@ -16,7 +15,7 @@ export class Collection<T, K> {
   async fetch(): Promise<void> {
     const data = await this.sync.fetchAll();
     data.forEach((el) => {
-      this.collectibles.push(this.deserialize(el));
+      this.models.push(this.deserialize(el));
     });
   }
 }
