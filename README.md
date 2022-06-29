@@ -9,20 +9,4 @@ Build a simple web framework to create dynamic reusable components; a scaled-dow
 3. user class to persist data to server
 4. user class to notify rest of app when data changed
 
-## Classes
-
-1. User
-2. Model
-3. View
-
-### User Interface
-
-```
-private data: UserProps
-get(propName:string): (string | number)
-set(update: UserProps): void
-on(eventName: string, callback: ()=>{}): void
-trigger(eventName: string): void
-fetch(): Promise
-save(): Promise
-```
+<img width="490" alt="Screen Shot 2022-06-28 at 18 26 02" src="https://user-images.githubusercontent.com/44284799/176314718-26b40d86-adae-4977-8cd6-2d1bc1ae5d09.png">
