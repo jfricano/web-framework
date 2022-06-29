@@ -10,14 +10,15 @@ export interface ModelAttributes<T> {
 /**
  * Events
  */
-export type EventCallback = (error?: Error) => void;
+export type EventCallback = () => void;
+export type EventCallbackWithErrorHandling = (error?: Error) => void;
 
 export interface EventRegistry {
-  [eventName: string]: EventCallback[];
+  [eventName: string]: EventCallbackWithErrorHandling[];
 }
 
 export interface Events {
-  on: (eventName: string, callback: EventCallback) => void;
+  on: (eventName: string, callback: EventCallbackWithErrorHandling) => void;
   trigger: (eventName: string, error?: Error) => void;
 }
 

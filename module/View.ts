@@ -1,6 +1,4 @@
-import { Model } from './Model';
-
-import { EventCallback } from './Model';
+import { EventCallback, Model } from './Model';
 
 export interface EventsMap {
   [eventType: string]: EventCallback;

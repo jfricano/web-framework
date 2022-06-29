@@ -1,6 +1,5 @@
-import { EventCallback, EventsMap, View } from '../../module/View';
+import { EventsMap, View, EventCallback } from '../../module';
 import { User, UserProps } from '../models/User';
-
 export class UserForm extends View<User, UserProps> {
   private onSetAgeClick: EventCallback = () => {
     this.model.setRandomAge();
