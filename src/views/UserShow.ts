@@ -1,7 +1,7 @@
-import { User, UserProps } from '../models';
+import { User, UserProps } from '../models/User';
 
 import { UserViewProps } from './UserList';
-import { View } from './View';
+import { View } from '../../module/View';
 
 export class UserShow extends View<User, UserProps, UserViewProps> {
   // displayHeader: boolean = true;

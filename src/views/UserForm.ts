@@ -1,5 +1,5 @@
-import { EventCallback, EventsMap, View } from './View';
-import { User, UserProps } from '../models';
+import { EventCallback, EventsMap, View } from '../../module/View';
+import { User, UserProps } from '../models/User';
 
 export class UserForm extends View<User, UserProps> {
   private onSetAgeClick: EventCallback = () => {

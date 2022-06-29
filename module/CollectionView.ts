@@ -1,4 +1,5 @@
-import { Collection, Model } from '../models';
+import { Model } from './Model';
+import { Collection } from './Collection';
 
 export abstract class CollectionView<TModel extends Model<TData>, TData> {
   constructor(

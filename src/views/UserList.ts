@@ -1,6 +1,6 @@
 import { User, UserProps } from '../models';
 
-import { CollectionView } from './CollectionView';
+import { CollectionView } from '../../module';
 import { UserEdit } from './UserEdit';
 
 export interface UserViewProps {

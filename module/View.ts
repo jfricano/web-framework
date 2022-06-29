@@ -1,6 +1,7 @@
-import { Model } from '../models';
+import { Model } from './Model';
 
-export type EventCallback = () => void;
+import { EventCallback } from './Model';
+
 export interface EventsMap {
   [eventType: string]: EventCallback;
 }

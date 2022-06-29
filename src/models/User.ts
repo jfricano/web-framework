@@ -1,8 +1,4 @@
-import { ApiSync } from './ApiSync';
-import { Attributes } from './Attributes';
-import { Collection } from './Collection';
-import { Eventing } from './Eventing';
-import { Model } from './Model';
+import { ApiSync, Attributes, Collection, Eventing, Model } from '../../module';
 
 const ROOT_URL = 'http://localhost:3000/users';
 

@@ -1,4 +1,4 @@
-import { RegionsMap, View } from './View';
+import { RegionsMap, View } from '../../module';
 import { User, UserProps } from '../models';
 
 import { UserForm } from './UserForm';
